@@ -36,13 +36,10 @@ function showPage(pageId) {
     // 显示目标页面
     const targetPage = document.getElementById(pageId);
     if (targetPage) {
-        targetPage.classList.add('active');
-        
-        // 添加动画效果
-        targetPage.style.animation = 'fadeInScale 0.4s ease-out';
-        setTimeout(() => {
-            targetPage.style.animation = '';
-        }, 400);
+        // 使用requestAnimationFrame确保DOM更新后再显示
+        requestAnimationFrame(() => {
+            targetPage.classList.add('active');
+        });
     }
 }
 
@@ -176,9 +173,9 @@ function previousQuestion() {
 // ===== 更新上一题按钮状态 =====
 function updatePrevButton() {
     if (currentQuestionIndex === 0) {
-        prevBtn.disabled = true;
-        prevBtn.style.opacity = '0.5';
+        prevBtn.style.display = 'none';
     } else {
+        prevBtn.style.display = 'flex';
         prevBtn.disabled = false;
         prevBtn.style.opacity = '1';
     }
