@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预测离职概率 - 职场心理测试</title>
+    <meta name="description" content="通过回答职场场景问题，预测你的离职概率，获得个性化建议">
+    <meta name="keywords" content="离职预测,职场测试,职业规划,工作满意度">
+    
+    <!-- 苹果设备优化 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="离职预测">
+    
+    <!-- 样式文件 -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- 字体图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 主容器 -->
+    <div class="app-container">
+        
+        <!-- 欢迎页面 -->
+        <div class="page welcome-page active" id="welcomePage">
+            <div class="welcome-content">
+                <!-- 顶部装饰 -->
+                <div class="welcome-header">
+                    <div class="logo-icon">
+                        <i class="fas fa-heart-broken"></i>
+                    </div>
+                    <h1 class="main-title">职场痛苦指数检测</h1>
+                    <p class="subtitle">测测你是不是快撑不下去了...</p>
+                </div>
+                
+                <!-- 痛点描述 -->
+                <div class="pain-points">
+                    <div class="pain-summary">
+                        <p>周一恐惧症？职场PUA？薪资焦虑？<br>测测你的职场痛苦指数，看看是不是该考虑跳槽了...</p>
+                    </div>
+                </div>
+                
+                <!-- 开始按钮 -->
+                <div class="start-section">
+                    <button class="start-btn" onclick="startTest()">
+                        <i class="fas fa-play"></i>
+                        <span>开始预测</span>
+                    </button>
+                    <p class="start-tip">只需2分钟，了解你的职场状态</p>
+                </div>
+                
+                <!-- 底部说明 -->
+                <div class="welcome-footer">
+                    <p class="disclaimer">本测试仅供参考，不构成职业建议</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 问题页面 -->
+        <div class="page question-page" id="questionPage">
+            <div class="question-content">
+                <!-- 返回首页按钮 -->
+                <div class="back-to-home">
+                    <button class="back-btn" onclick="backToHome()">
+                        <i class="fas fa-home"></i>
+                    </button>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">1/8</div>
+                </div>
+                
+                <!-- 问题区域 -->
+                <div class="question-area">
+                    <h2 class="question-title" id="questionTitle">问题标题</h2>
+                    <div class="options-container" id="optionsContainer">
+                        <!-- 选项将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 导航按钮 -->
+                <div class="navigation">
+                    <button class="nav-btn prev-btn" id="prevBtn" onclick="previousQuestion()" disabled>
+                        <i class="fas fa-arrow-left"></i>
+                        <span>上一题</span>
+                    </button>
+                    <div class="question-indicator" id="questionIndicator">
+                        <span class="current-question" id="currentQuestionNum">1</span>
+                        <span class="total-questions">/8</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 结果页面 -->
+        <div class="page result-page" id="resultPage">
+            <div class="result-content">
+                <!-- 结果头部 -->
+                <div class="result-header">
+                    <div class="result-icon" id="resultIcon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h2 class="result-title" id="resultTitle">职场满意达人</h2>
+                    <div class="probability-badge" id="probabilityBadge">
+                        <span class="probability-text">离职概率: 5-15%</span>
+                    </div>
+                </div>
+                
+                <!-- 结果描述 -->
+                <div class="result-description" id="resultDescription">
+                    你对当前工作很满意，离职概率很低！
+                </div>
+                
+                <!-- 建议列表 -->
+                <div class="advice-section">
+                    <h3 class="advice-title">个性化建议</h3>
+                    <ul class="advice-list" id="adviceList">
+                        <!-- 建议将通过JavaScript动态生成 -->
+                    </ul>
+                </div>
+                
+                <!-- 激励文案 -->
+                <div class="encouragement-section">
+                    <div class="encouragement-content" id="encouragementContent">
+                        💪 你就像职场中的小太阳，用正能量感染着身边的每一个人！
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="result-actions">
+                    <button class="action-btn retry-btn" onclick="restartTest()">
+                        <i class="fas fa-redo"></i>
+                        <span>重新测试</span>
+                    </button>
+                    <button class="action-btn share-btn" onclick="shareResult()">
+                        <i class="fas fa-share"></i>
+                        <span>分享结果</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p class="loading-text">正在分析你的答案...</p>
+        </div>
+    </div>
+    
+    <!-- JavaScript文件 -->
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
