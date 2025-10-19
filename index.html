@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>预测离职概率 - 职场心理测试</title>
+    <meta name="description" content="通过回答职场场景问题，预测你的离职概率，获得个性化建议">
+    <meta name="keywords" content="离职预测,职场测试,职业规划,工作满意度">
+    
+    <!-- 苹果设备优化 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="离职预测">
+    
+    <!-- 样式文件 -->
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- 字体图标 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="top-nav">
+        <div class="nav-content">
+            <div class="nav-left">
+                <button class="nav-btn" onclick="showRanking()" title="排行榜">
+                    <i class="fas fa-trophy"></i>
+                </button>
+            </div>
+            <div class="nav-center">
+                <h1 class="nav-title">职场温度计</h1>
+            </div>
+            <div class="nav-right">
+                <button class="nav-btn" onclick="showPersonal()" title="我的">
+                    <i class="fas fa-user"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="app-container">
+        
+        <!-- 欢迎页面 -->
+        <div class="page welcome-page active" id="welcomePage">
+            <div class="welcome-content">
+                <!-- 顶部装饰 -->
+                <div class="welcome-header">
+                    <div class="logo-icon">
+                        <i class="fas fa-thermometer-half"></i>
+                    </div>
+                    <h1 class="main-title">职场温度计</h1>
+                    <p class="subtitle">测测你的职场"体温"，看看是不是该"降温"了...</p>
+                </div>
+                
+                <!-- 痛点描述 -->
+                <div class="pain-points">
+                    <div class="pain-summary">
+                        <p>🌡️ 职场"发烧"了？还是"感冒"了？<br>让我们的职场温度计帮你"诊断"一下，看看你的职场"体温"是否正常...</p>
+                    </div>
+                </div>
+                
+                <!-- 用户信息输入 -->
+                <div class="user-info-section">
+                    <div class="info-input-group">
+                        <input type="text" id="userNameInput" placeholder="输入你的昵称（可选）" class="info-input">
+                        <input type="text" id="userCompanyInput" placeholder="输入你的公司名称（可选）" class="info-input">
+                    </div>
+                    <p class="info-tip">完善信息可获得更准确的测试结果和公司排行</p>
+                </div>
+                
+                <!-- 开始按钮 -->
+                <div class="start-section">
+                    <button class="start-btn" onclick="startTest()">
+                        <i class="fas fa-stethoscope"></i>
+                        <span>开始诊断</span>
+                    </button>
+                    <p class="start-tip">只需2分钟，了解你的职场"体温"</p>
+                </div>
+                
+                <!-- 底部说明 -->
+                <div class="welcome-footer">
+                    <p class="disclaimer">本测试仅供参考，不构成职业建议</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 问题页面 -->
+        <div class="page question-page" id="questionPage">
+            <div class="question-content">
+                <!-- 返回首页按钮 -->
+                <div class="back-to-home">
+                    <button class="back-btn" onclick="backToHome()">
+                        <i class="fas fa-home"></i>
+                    </button>
+                </div>
+                
+                <!-- 进度条 -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">1/8</div>
+                </div>
+                
+                <!-- 问题区域 -->
+                <div class="question-area">
+                    <h2 class="question-title" id="questionTitle">问题标题</h2>
+                    <div class="options-container" id="optionsContainer">
+                        <!-- 选项将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <!-- 导航按钮 -->
+                <div class="navigation">
+                    <button class="nav-btn prev-btn" id="prevBtn" onclick="previousQuestion()" disabled>
+                        <span>上一题</span>
+                    </button>
+                    <div class="question-indicator" id="questionIndicator">
+                        <span class="current-question" id="currentQuestionNum">1</span>
+                        <span class="total-questions">/8</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 结果页面 -->
+        <div class="page result-page" id="resultPage">
+            <div class="result-content">
+                <!-- 结果头部 -->
+                <div class="result-header">
+                    <div class="result-icon" id="resultIcon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="result-title-row">
+                        <h2 class="result-title" id="resultTitle">职场满意达人</h2>
+                        <div class="temperature-explanation">
+                            <i class="fas fa-info-circle temperature-info-icon" title="职场温度说明"></i>
+                            <div class="temperature-tooltip">
+                                <div class="tooltip-content">
+                                    <p>温度越高，离职概率越高</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 结果描述 -->
+                <div class="result-description" id="resultDescription">
+                    你对当前工作很满意，离职概率很低！
+                </div>
+                
+                <!-- 人格化描述 -->
+                <div class="personality-section">
+                    <h3 class="personality-title">你的职场人格</h3>
+                    <div class="personality-content" id="personalityContent">
+                        <div class="personality-name" id="personalityName">职场健康达人</div>
+                        <div class="personality-description" id="personalityDescription">
+                            你就像职场中的'健康达人'，工作对你来说不是负担，而是生活的调味剂。
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 建议列表 -->
+                <div class="advice-section">
+                    <h3 class="advice-title">个性化建议</h3>
+                    <ul class="advice-list" id="adviceList">
+                        <!-- 建议将通过JavaScript动态生成 -->
+                    </ul>
+                </div>
+                
+                <!-- 激励文案 -->
+                <div class="encouragement-section">
+                    <div class="encouragement-content" id="encouragementContent">
+                        💪 你就像职场中的小太阳，用正能量感染着身边的每一个人！
+                    </div>
+                </div>
+                
+                <!-- 操作按钮 -->
+                <div class="result-actions">
+                    <button class="action-btn retry-btn" onclick="restartTest()">
+                        <i class="fas fa-redo"></i>
+                        <span>重新测试</span>
+                    </button>
+                    <button class="action-btn ranking-btn" onclick="showRanking()">
+                        <i class="fas fa-trophy"></i>
+                        <span>查看排名</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 排行榜页面 -->
+        <div class="page ranking-page" id="rankingPage">
+            <div class="ranking-content">
+                <!-- 返回按钮 -->
+                <div class="back-to-home">
+                    <button class="back-btn" onclick="backToHome()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+                
+                <!-- 排行榜头部 -->
+                <div class="ranking-header">
+                    <h2 class="ranking-title">公司温度排行榜</h2>
+                    <p class="ranking-subtitle">看看你的公司在职场温度排行榜上的位置</p>
+                </div>
+                
+                <!-- 公司输入 -->
+                <div class="company-input-section">
+                    <div class="input-group">
+                        <input type="text" id="companyInput" placeholder="输入你的公司名称" class="company-input">
+                        <button class="search-btn" onclick="searchCompany()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <p class="input-tip">输入公司名称查看排名，支持修改</p>
+                </div>
+                
+                <!-- 排行榜列表 -->
+                <div class="ranking-list" id="rankingList">
+                    <!-- 排行榜将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 个人页面 -->
+        <div class="page personal-page" id="personalPage">
+            <div class="personal-content">
+                <!-- 返回按钮 -->
+                <div class="back-to-home">
+                    <button class="back-btn" onclick="backToHome()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+                
+                <!-- 个人头部 -->
+                <div class="personal-header">
+                    <div class="avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <h2 class="personal-title">我的测试记录 <i class="fas fa-info-circle temperature-info-icon" title="职场温度说明"></i></h2>
+                    <p class="personal-subtitle">查看你的历史测试结果</p>
+                    <div class="temperature-tooltip">
+                        <div class="tooltip-content">
+                            <h4>🌡️ 职场温度说明</h4>
+                            <p>温度越高，离职概率越高。温度反映了你对当前工作的满意度和压力水平。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 测试历史 -->
+                <div class="test-history" id="testHistory">
+                    <!-- 历史记录将通过JavaScript动态生成 -->
+                </div>
+                
+                <!-- 清空记录按钮 -->
+                <div class="clear-history">
+                    <button class="clear-btn" onclick="clearHistory()">
+                        <i class="fas fa-trash"></i>
+                        <span>清空记录</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 公司员工排行页面 -->
+        <div class="page company-employees-page" id="companyEmployeesPage">
+            <div class="company-employees-content">
+                <!-- 返回按钮 -->
+                <div class="back-to-home">
+                    <button class="back-btn" onclick="backToRanking()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                </div>
+                
+                <!-- 公司员工头部 -->
+                <div class="company-employees-header">
+                    <h2 class="company-employees-title" id="companyEmployeesTitle">公司员工排行</h2>
+                    <p class="company-employees-subtitle" id="companyEmployeesSubtitle">查看该公司员工的职场温度排行</p>
+                </div>
+                
+                <!-- 员工排行列表 -->
+                <div class="employees-list" id="employeesList">
+                    <!-- 员工排行将通过JavaScript动态生成 -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- 用户信息输入页面 -->
+        <div class="page user-info-page" id="userInfoPage">
+            <div class="user-info-content">
+                <!-- 用户信息头部 -->
+                <div class="user-info-header">
+                    <h2 class="user-info-title">完善个人信息</h2>
+                    <p class="user-info-subtitle">输入你的姓名和公司，获得更准确的测试结果</p>
+                </div>
+                
+                <!-- 用户信息表单 -->
+                <div class="user-info-form">
+                    <div class="form-group">
+                        <label for="userNameInput">姓名/昵称</label>
+                        <input type="text" id="userNameInput" placeholder="请输入你的姓名或昵称" class="form-input">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userCompanyInput">公司名称</label>
+                        <input type="text" id="userCompanyInput" placeholder="请输入你的公司名称" class="form-input">
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button class="form-btn primary" onclick="saveUserInfo()">
+                            <i class="fas fa-save"></i>
+                            <span>保存信息</span>
+                        </button>
+                        <button class="form-btn secondary" onclick="skipUserInfo()">
+                            <i class="fas fa-skip-forward"></i>
+                            <span>跳过</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- 加载动画 -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p class="loading-text">正在分析你的答案...</p>
+        </div>
+    </div>
+    
+    <!-- JavaScript文件 -->
+    <script src="questions.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
