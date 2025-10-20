@@ -896,8 +896,8 @@ function showToast(message) {
 
 // ===== 页面加载完成后的初始化 =====
 document.addEventListener('DOMContentLoaded', function() {
-    // 规范化结果配置：在生成阶段将描述与鼓励文案限制到50字以内
-    normalizeResultConfig(50);
+    // 规范化结果配置：在生成阶段将描述与鼓励文案限制到45字以内
+    normalizeResultConfig(45);
     // 添加触摸反馈
     document.addEventListener('touchstart', function(e) {
         if (e.target.classList.contains('option-btn') || 

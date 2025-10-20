@@ -754,8 +754,8 @@ html, body {
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-xs);
-    padding-bottom: var(--spacing-2xl);
+    gap: var(--spacing-2xs); /* 更紧凑的卡片间距 */
+    padding-bottom: var(--spacing-xl); /* 减少底部内边距 */
 }
 
 
@@ -971,12 +971,12 @@ html, body {
 .advice-card,
 .encouragement-card {
     background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--radius-lg);
-    padding: var(--spacing-sm);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-base); /* 略小的圆角 */
+    padding: var(--spacing-xs); /* 更小的内边距 */
+    box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
     text-align: center;
 }
 
@@ -1003,19 +1003,19 @@ html, body {
 }
 
 .result-icon {
-    width: 40px;
-    height: 40px;
+    width: 36px; /* 略小 */
+    height: 36px;
     background: linear-gradient(135deg, var(--primary-color), var(--success-color));
     border-radius: var(--radius-full);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto var(--spacing-xs);
-    box-shadow: 0 4px 16px rgba(0, 122, 255, 0.3);
+    margin: 0 auto var(--spacing-2xs);
+    box-shadow: 0 3px 12px rgba(0, 122, 255, 0.25);
 }
 
 .result-icon i {
-    font-size: 16px;
+    font-size: 14px;
     color: white;
 }
 
