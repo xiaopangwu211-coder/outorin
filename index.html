@@ -19,24 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav class="top-nav">
-        <div class="nav-content">
-            <div class="nav-left">
-                <button class="nav-btn" onclick="showRanking()" title="排行榜">
-                    <i class="fas fa-trophy"></i>
-                </button>
-            </div>
-            <div class="nav-center">
-                <h1 class="nav-title">职场温度计</h1>
-            </div>
-            <div class="nav-right">
-                <button class="nav-btn" onclick="showPersonal()" title="我的">
-                    <i class="fas fa-user"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
+    <!-- 导航栏已移除 -->
 
     <!-- 主容器 -->
     <div class="app-container">
@@ -60,14 +43,7 @@
                     </div>
                 </div>
                 
-                <!-- 用户信息输入 -->
-                <div class="user-info-section">
-                    <div class="info-input-group">
-                        <input type="text" id="userNameInput" placeholder="输入你的昵称（可选）" class="info-input">
-                        <input type="text" id="userCompanyInput" placeholder="输入你的公司名称（可选）" class="info-input">
-                    </div>
-                    <p class="info-tip">完善信息可获得更准确的测试结果和公司排行</p>
-                </div>
+                <!-- 用户信息输入已移除 -->
                 
                 <!-- 开始按钮 -->
                 <div class="start-section">
@@ -190,137 +166,13 @@
             </div>
         </div>
         
-        <!-- 排行榜页面 -->
-        <div class="page ranking-page" id="rankingPage">
-            <div class="ranking-content">
-                <!-- 返回按钮 -->
-                <div class="back-to-home">
-                    <button class="back-btn" onclick="backToHome()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                </div>
-                
-                <!-- 排行榜头部 -->
-                <div class="ranking-header">
-                    <h2 class="ranking-title">公司温度排行榜</h2>
-                    <p class="ranking-subtitle">看看你的公司在职场温度排行榜上的位置</p>
-                </div>
-                
-                <!-- 公司输入 -->
-                <div class="company-input-section">
-                    <div class="input-group">
-                        <input type="text" id="companyInput" placeholder="输入你的公司名称" class="company-input">
-                        <button class="search-btn" onclick="searchCompany()">
-                            <i class="fas fa-search"></i>
-                        </button>
-                    </div>
-                    <p class="input-tip">输入公司名称查看排名，支持修改</p>
-                </div>
-                
-                <!-- 排行榜列表 -->
-                <div class="ranking-list" id="rankingList">
-                    <!-- 排行榜将通过JavaScript动态生成 -->
-                </div>
-            </div>
-        </div>
+        <!-- 排行榜页面已移除 -->
         
-        <!-- 个人页面 -->
-        <div class="page personal-page" id="personalPage">
-            <div class="personal-content">
-                <!-- 返回按钮 -->
-                <div class="back-to-home">
-                    <button class="back-btn" onclick="backToHome()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                </div>
-                
-                <!-- 个人头部 -->
-                <div class="personal-header">
-                    <div class="avatar">
-                        <i class="fas fa-user-circle"></i>
-                    </div>
-                    <h2 class="personal-title">我的测试记录 <i class="fas fa-info-circle temperature-info-icon" title="职场温度说明"></i></h2>
-                    <p class="personal-subtitle">查看你的历史测试结果</p>
-                    <div class="temperature-tooltip">
-                        <div class="tooltip-content">
-                            <h4>🌡️ 职场温度说明</h4>
-                            <p>温度越高，离职概率越高。温度反映了你对当前工作的满意度和压力水平。</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- 测试历史 -->
-                <div class="test-history" id="testHistory">
-                    <!-- 历史记录将通过JavaScript动态生成 -->
-                </div>
-                
-                <!-- 清空记录按钮 -->
-                <div class="clear-history">
-                    <button class="clear-btn" onclick="clearHistory()">
-                        <i class="fas fa-trash"></i>
-                        <span>清空记录</span>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <!-- 个人页面已移除 -->
         
-        <!-- 公司员工排行页面 -->
-        <div class="page company-employees-page" id="companyEmployeesPage">
-            <div class="company-employees-content">
-                <!-- 返回按钮 -->
-                <div class="back-to-home">
-                    <button class="back-btn" onclick="backToRanking()">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                </div>
-                
-                <!-- 公司员工头部 -->
-                <div class="company-employees-header">
-                    <h2 class="company-employees-title" id="companyEmployeesTitle">公司员工排行</h2>
-                    <p class="company-employees-subtitle" id="companyEmployeesSubtitle">查看该公司员工的职场温度排行</p>
-                </div>
-                
-                <!-- 员工排行列表 -->
-                <div class="employees-list" id="employeesList">
-                    <!-- 员工排行将通过JavaScript动态生成 -->
-                </div>
-            </div>
-        </div>
+        <!-- 公司员工排行页面已移除 -->
         
-        <!-- 用户信息输入页面 -->
-        <div class="page user-info-page" id="userInfoPage">
-            <div class="user-info-content">
-                <!-- 用户信息头部 -->
-                <div class="user-info-header">
-                    <h2 class="user-info-title">完善个人信息</h2>
-                    <p class="user-info-subtitle">输入你的姓名和公司，获得更准确的测试结果</p>
-                </div>
-                
-                <!-- 用户信息表单 -->
-                <div class="user-info-form">
-                    <div class="form-group">
-                        <label for="userNameInput">姓名/昵称</label>
-                        <input type="text" id="userNameInput" placeholder="请输入你的姓名或昵称" class="form-input">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="userCompanyInput">公司名称</label>
-                        <input type="text" id="userCompanyInput" placeholder="请输入你的公司名称" class="form-input">
-                    </div>
-                    
-                    <div class="form-actions">
-                        <button class="form-btn primary" onclick="saveUserInfo()">
-                            <i class="fas fa-save"></i>
-                            <span>保存信息</span>
-                        </button>
-                        <button class="form-btn secondary" onclick="skipUserInfo()">
-                            <i class="fas fa-skip-forward"></i>
-                            <span>跳过</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- 用户信息输入页面已移除 -->
         
     </div>
     

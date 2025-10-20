@@ -67,15 +67,6 @@ function getUsedQuestionIds() {
 
 // ===== 测试开始函数 =====
 function startTest() {
-    // 保存用户信息
-    const userName = document.getElementById('userNameInput').value.trim();
-    const userCompany = document.getElementById('userCompanyInput').value.trim();
-    
-    if (userName || userCompany) {
-        const userInfo = { userName, company: userCompany };
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    }
-    
     // 重置测试状态
     currentQuestionIndex = 0;
     userAnswers = [];
@@ -406,35 +397,12 @@ function restartTest() {
     }, 400);
 }
 
-// ===== 显示排行榜页面 =====
-function showRanking() {
-    showPage('rankingPage');
-    loadRankingData();
-}
+// ===== 排行榜相关功能已移除 =====
 
-// ===== 显示个人页面 =====
-function showPersonal() {
-    showPage('personalPage');
-    loadPersonalData();
-}
+// ===== 搜索公司功能已移除 =====
 
-// ===== 搜索公司 =====
-function searchCompany() {
-    const companyInput = document.getElementById('companyInput');
-    const companyName = companyInput.value.trim();
-    
-    if (!companyName) {
-        showToast('请输入公司名称');
-        return;
-    }
-    
-    // 模拟搜索公司排名
-    const rankingList = document.getElementById('rankingList');
-    rankingList.innerHTML = generateRankingList(companyName);
-}
-
-// ===== 生成排行榜列表 =====
-function generateRankingList(searchCompany = '') {
+// ===== 排行榜相关功能已移除 =====
+function generateRankingList_removed(searchCompany = '') {
     // 获取所有测试记录
     const allRecords = getAllTestRecords();
     
@@ -505,14 +473,10 @@ function generateRankingList(searchCompany = '') {
     `).join('');
 }
 
-// ===== 加载排行榜数据 =====
-function loadRankingData() {
-    const rankingList = document.getElementById('rankingList');
-    rankingList.innerHTML = generateRankingList();
-}
+// ===== 排行榜相关功能已移除 =====
 
-// ===== 加载个人数据 =====
-function loadPersonalData() {
+// ===== 个人数据相关功能已移除 =====
+function loadPersonalData_removed() {
     const testHistory = document.getElementById('testHistory');
     const history = getTestHistory();
     
@@ -560,7 +524,6 @@ function getAllTestRecords() {
 // ===== 保存测试记录 =====
 function saveTestRecord(result, totalScore, preciseTemp, selectedPersonality) {
     const history = getTestHistory();
-    const userInfo = getUserInfo();
     const newRecord = {
         id: Date.now(),
         title: result.title,
@@ -570,8 +533,6 @@ function saveTestRecord(result, totalScore, preciseTemp, selectedPersonality) {
         icon: result.icon,
         date: new Date().toLocaleDateString('zh-CN'),
         timestamp: Date.now(),
-        userName: userInfo.userName || '匿名用户',
-        company: userInfo.company || '',
         personality: selectedPersonality.name, // 使用选中的职场人格名称
         personalityDescription: selectedPersonality.description, // 使用选中的职场人格描述
         advice: result.advice,
@@ -612,35 +573,10 @@ function clearHistory() {
     }
 }
 
-// ===== 用户信息管理 =====
-function getUserInfo() {
-    const userInfo = localStorage.getItem('userInfo');
-    return userInfo ? JSON.parse(userInfo) : { userName: '', company: '' };
-}
+// ===== 用户信息管理功能已移除 =====
 
-function saveUserInfo() {
-    const userName = document.getElementById('userNameInput').value.trim();
-    const company = document.getElementById('userCompanyInput').value.trim();
-    
-    if (!userName) {
-        showToast('请输入姓名或昵称');
-        return;
-    }
-    
-    const userInfo = { userName, company };
-    localStorage.setItem('userInfo', JSON.stringify(userInfo));
-    
-    showToast('个人信息已保存');
-    backToHome();
-}
-
-function skipUserInfo() {
-    showToast('已跳过个人信息设置');
-    backToHome();
-}
-
-// ===== 公司员工排行功能 =====
-function showCompanyEmployees(companyName) {
+// ===== 公司员工排行功能已移除 =====
+function showCompanyEmployees_removed(companyName) {
     showPage('companyEmployeesPage');
     loadCompanyEmployees(companyName);
 }
