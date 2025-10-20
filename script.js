@@ -30,12 +30,28 @@ const personalityDescription = document.getElementById('personalityDescription')
 const adviceList = document.getElementById('adviceList');
 const encouragementContent = document.getElementById('encouragementContent');
 
-// ===== 文本截断工具（超出则在最大长度内添加省略号，确保不超上限） =====
-function truncateText(text, maxLen) {
-    if (typeof text !== 'string') return '';
-    if (text.length <= maxLen) return text;
-    if (maxLen <= 1) return text.slice(0, maxLen);
-    return text.slice(0, maxLen - 1) + '…';
+// ===== 结果配置文本规范化（生成阶段限制长度≤50） =====
+function normalizeResultConfig(maxLen = 50) {
+    try {
+        if (!window.resultConfig) return;
+        const cfg = window.resultConfig;
+        const clamp = (s) => (typeof s === 'string' && s.length > maxLen) ? s.slice(0, maxLen) : s;
+        Object.keys(cfg).forEach(key => {
+            const item = cfg[key];
+            if (!item) return;
+            // encouragement限制
+            if (item.encouragement) item.encouragement = clamp(item.encouragement);
+            // personalityDescription限制
+            if (item.personalityDescription) item.personalityDescription = clamp(item.personalityDescription);
+            // personalityOptions内描述限制
+            if (Array.isArray(item.personalityOptions)) {
+                item.personalityOptions = item.personalityOptions.map(p => ({
+                    name: p.name,
+                    description: clamp(p.description)
+                }));
+            }
+        });
+    } catch (_) {}
 }
 
 // ===== 页面切换函数 =====
@@ -496,8 +512,8 @@ function updateResultPage(result, totalScore, preciseTemp) {
     }
     
     personalityName.textContent = selectedPersonality.name;
-    // 人格描述限制：最多50个字
-    personalityDescription.textContent = truncateText(selectedPersonality.description, 50);
+    // 人格描述生成阶段已限制，这里直接赋值
+    personalityDescription.textContent = selectedPersonality.description;
     
     // 更新建议列表（只显示前3条）
     adviceList.innerHTML = '';
@@ -509,8 +525,8 @@ function updateResultPage(result, totalScore, preciseTemp) {
         adviceList.appendChild(li);
     });
     
-    // 更新激励文案（最多50个字）
-    encouragementContent.textContent = truncateText(result.encouragement, 50);
+    // 激励文案生成阶段已限制，这里直接赋值
+    encouragementContent.textContent = result.encouragement;
     
     // 保存测试记录（传入选中的职场人格）
     saveTestRecord(result, totalScore, preciseTemp, selectedPersonality);
@@ -880,6 +896,8 @@ function showToast(message) {
 
 // ===== 页面加载完成后的初始化 =====
 document.addEventListener('DOMContentLoaded', function() {
+    // 规范化结果配置：在生成阶段将描述与鼓励文案限制到50字以内
+    normalizeResultConfig(50);
     // 添加触摸反馈
     document.addEventListener('touchstart', function(e) {
         if (e.target.classList.contains('option-btn') || 
