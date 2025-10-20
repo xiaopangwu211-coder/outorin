@@ -762,7 +762,7 @@ html, body {
     background: #f8f9fa;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
-    padding: var(--spacing-base);
+    padding: var(--spacing-sm) var(--spacing-base) var(--spacing-base); /* 减少顶部内边距 */
     box-sizing: border-box;
 }
 
@@ -778,9 +778,9 @@ html, body {
 .personal-header {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-base); /* 压缩顶部间距 */
-    padding: var(--spacing-xs) 0; /* 压缩内边距 */
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-sm); /* 进一步压缩顶部间距 */
+    padding: var(--spacing-2xs) 0; /* 进一步压缩内边距 */
 }
 
 .personal-title {
@@ -792,7 +792,7 @@ html, body {
 
 .history-container {
     width: 100%;
-    margin-bottom: var(--spacing-lg);
+    margin: 0 0 var(--spacing-base) 0; /* 去掉顶部外边距，避免首屏被推下 */
     overflow: visible; /* 初始直接显示内容，不用内层滚动 */
 }
 
@@ -819,8 +819,8 @@ html, body {
     background: #ffffff;
     border: 1px solid rgba(0, 0, 0, 0.08);
     border-radius: 12px;
-    padding: var(--spacing-lg);
-    margin-bottom: var(--spacing-base);
+    padding: var(--spacing-base); /* 减少卡片内边距，更紧凑 */
+    margin: 0 0 var(--spacing-sm) 0; /* 首个卡片顶部不再留白 */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     transition: all 0.2s ease;
     position: relative;

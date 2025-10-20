@@ -577,6 +577,17 @@ function loadPersonalData() {
             </div>
         `;
     }).join('');
+
+    // 内容渲染完成后，确保列表滚动到顶部
+    try {
+        const personalPageEl = document.getElementById('personalPage');
+        if (personalPageEl) personalPageEl.scrollTop = 0;
+        if (document.scrollingElement) {
+            document.scrollingElement.scrollTop = 0;
+        } else {
+            window.scrollTo(0, 0);
+        }
+    } catch (_) {}
 }
 
 function clearHistory() {
