@@ -395,20 +395,26 @@ function showResult() {
         // 强制启用移动端滚动
         setTimeout(() => {
             const resultPage = document.getElementById('resultPage');
-            if (resultPage) {
-                resultPage.style.overflowY = 'auto';
-                resultPage.style.webkitOverflowScrolling = 'touch';
-                resultPage.style.touchAction = 'pan-y';
-                resultPage.style.overscrollBehavior = 'contain';
+            const scrollContainer = resultPage.querySelector('.result-scroll-container');
+            if (resultPage && scrollContainer) {
+                // 设置滚动容器
+                scrollContainer.style.overflowY = 'auto';
+                scrollContainer.style.webkitOverflowScrolling = 'touch';
+                scrollContainer.style.touchAction = 'pan-y';
+                scrollContainer.style.overscrollBehavior = 'contain';
                 
                 // 添加触摸事件支持
-                resultPage.addEventListener('touchstart', function(e) {
+                scrollContainer.addEventListener('touchstart', function(e) {
                     this.style.overflowY = 'auto';
                 }, { passive: true });
                 
-                resultPage.addEventListener('touchmove', function(e) {
+                scrollContainer.addEventListener('touchmove', function(e) {
                     this.style.overflowY = 'auto';
                 }, { passive: true });
+                
+                // 强制启用滚动
+                scrollContainer.style.height = '100%';
+                scrollContainer.style.maxHeight = '100%';
             }
         }, 100);
     }, 2000);

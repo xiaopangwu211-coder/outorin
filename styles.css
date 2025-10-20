@@ -314,6 +314,14 @@ html, body {
     margin-bottom: var(--spacing-sm);
 }
 
+.progress-text {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-align: right;
+    width: 100%;
+}
+
 .progress-fill {
     height: 100%;
     background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
@@ -718,13 +726,19 @@ html, body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: hidden;
     padding: var(--spacing-sm);
     box-sizing: border-box;
     position: relative;
+}
+
+.result-scroll-container {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
     overscroll-behavior: contain;
+    padding-right: var(--spacing-xs);
 }
 
 .result-content {
@@ -734,8 +748,6 @@ html, body {
     flex-direction: column;
     gap: var(--spacing-sm);
     padding-bottom: var(--spacing-xl);
-    flex: 1;
-    min-height: 0;
 }
 
 
