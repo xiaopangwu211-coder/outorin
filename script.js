@@ -30,6 +30,14 @@ const personalityDescription = document.getElementById('personalityDescription')
 const adviceList = document.getElementById('adviceList');
 const encouragementContent = document.getElementById('encouragementContent');
 
+// ===== 文本截断工具（超出则在最大长度内添加省略号，确保不超上限） =====
+function truncateText(text, maxLen) {
+    if (typeof text !== 'string') return '';
+    if (text.length <= maxLen) return text;
+    if (maxLen <= 1) return text.slice(0, maxLen);
+    return text.slice(0, maxLen - 1) + '…';
+}
+
 // ===== 页面切换函数 =====
 function showPage(pageId) {
     // 隐藏所有页面
@@ -488,7 +496,8 @@ function updateResultPage(result, totalScore, preciseTemp) {
     }
     
     personalityName.textContent = selectedPersonality.name;
-    personalityDescription.textContent = selectedPersonality.description;
+    // 人格描述限制：最多55个字
+    personalityDescription.textContent = truncateText(selectedPersonality.description, 55);
     
     // 更新建议列表（只显示前3条）
     adviceList.innerHTML = '';
