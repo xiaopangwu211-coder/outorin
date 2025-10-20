@@ -338,7 +338,8 @@ html, body {
     color: var(--text-secondary);
     font-weight: 500;
     text-align: right !important;
-    width: 100% !important;
+    width: auto !important;
+    margin-left: auto !important;
 }
 
 .question-area {
@@ -1440,8 +1441,9 @@ html, body {
 }
 
 /* ===== 个人页面样式 ===== */
+/* 移除历史遗留的顶部内边距，避免首屏需要下滑才能看到内容 */
 .personal-page {
-    padding-top: 80px;
+    padding-top: 0;
 }
 
 .personal-content {
