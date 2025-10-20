@@ -391,6 +391,26 @@ function showResult() {
         
         // 添加结果页面动画
         resultPage.classList.add('animate-fadeInUp');
+        
+        // 强制启用移动端滚动
+        setTimeout(() => {
+            const resultPage = document.getElementById('resultPage');
+            if (resultPage) {
+                resultPage.style.overflowY = 'auto';
+                resultPage.style.webkitOverflowScrolling = 'touch';
+                resultPage.style.touchAction = 'pan-y';
+                resultPage.style.overscrollBehavior = 'contain';
+                
+                // 添加触摸事件支持
+                resultPage.addEventListener('touchstart', function(e) {
+                    this.style.overflowY = 'auto';
+                }, { passive: true });
+                
+                resultPage.addEventListener('touchmove', function(e) {
+                    this.style.overflowY = 'auto';
+                }, { passive: true });
+            }
+        }, 100);
     }, 2000);
 }
 

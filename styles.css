@@ -300,7 +300,9 @@ html, body {
 
 .progress-container {
     margin-bottom: var(--spacing-lg);
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .progress-bar {
@@ -720,6 +722,9 @@ html, body {
     -webkit-overflow-scrolling: touch;
     padding: var(--spacing-sm);
     box-sizing: border-box;
+    position: relative;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
 }
 
 .result-content {
@@ -728,8 +733,9 @@ html, body {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
-    padding-bottom: var(--spacing-base);
+    padding-bottom: var(--spacing-xl);
     flex: 1;
+    min-height: 0;
 }
 
 
