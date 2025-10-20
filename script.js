@@ -201,12 +201,22 @@ function generateOptions(options) {
         optionBtn.className = 'option-btn';
         optionBtn.setAttribute('data-score', option.score);
         
-        // 创建选项内容（最强制设置icon颜色为黑色）
-        const iconClass = option.icon || 'fa-circle';
+        // 创建选项内容（强制设置icon颜色为黑色 + 健壮回退）
+        let iconClassRaw = (option.icon || 'fa-circle').trim();
+        // 规范化为 Font Awesome Solid 家族
+        // 如果没有包含fa-家族前缀，补全
+        if (!/\bfa[srlb]?\b/.test(iconClassRaw)) {
+            if (!iconClassRaw.startsWith('fa-')) {
+                iconClassRaw = `fa-${iconClassRaw}`;
+            }
+            iconClassRaw = `fa-solid ${iconClassRaw}`;
+        } else if (!/(fa-solid|fas)\b/.test(iconClassRaw)) {
+            iconClassRaw = `fa-solid ${iconClassRaw}`;
+        }
         
         // 直接创建包含icon和文本的HTML
         optionBtn.innerHTML = `
-            <i class="option-icon fas ${iconClass}" style="color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;"></i>
+            <i class="option-icon ${iconClassRaw}" aria-hidden="true" style="color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;"></i>
             <span class="option-text">${option.text}</span>
         `;
         
@@ -268,6 +278,19 @@ function generateOptions(options) {
                 icon.style.display = 'inline-block';
             }
         }, 100);
+
+        // 渲染后校验：若图标无宽度或字体异常，则回退为默认icon
+        setTimeout(() => {
+            const icon = optionBtn.querySelector('.option-icon');
+            if (icon) {
+                const computed = window.getComputedStyle(icon);
+                const invalid = (icon.offsetWidth === 0) || !computed.fontFamily || computed.fontFamily.toLowerCase().indexOf('font') === -1;
+                if (invalid) {
+                    icon.className = 'option-icon fa-solid fa-circle';
+                    icon.style.cssText = 'color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;';
+                }
+            }
+        }, 150);
         
         // 添加点击事件
         optionBtn.addEventListener('click', (e) => {

@@ -1167,7 +1167,7 @@ html, body {
 
 .result-actions {
     position: fixed;
-    bottom: var(--spacing-2xl); /* 上移按钮，移动端更容易一屏展示 */
+    bottom: calc(var(--spacing-2xl) + 8px); /* 再上移一些 */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
