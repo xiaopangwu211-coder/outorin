@@ -110,9 +110,7 @@ function showQuestion() {
     progressText.textContent = `${currentQuestionIndex + 1}/${totalQuestions}`;
     // 强制设置页码样式，确保右对齐
     progressText.style.textAlign = 'right';
-    progressText.style.width = 'auto';
     progressText.style.display = 'inline-block';
-    progressText.style.marginLeft = 'auto';
     currentQuestionNum.textContent = currentQuestionIndex + 1;
     
     // 更新问题标题和分类
