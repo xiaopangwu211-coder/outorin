@@ -496,8 +496,8 @@ function updateResultPage(result, totalScore, preciseTemp) {
     }
     
     personalityName.textContent = selectedPersonality.name;
-    // 人格描述限制：最多55个字
-    personalityDescription.textContent = truncateText(selectedPersonality.description, 55);
+    // 人格描述限制：最多50个字
+    personalityDescription.textContent = truncateText(selectedPersonality.description, 50);
     
     // 更新建议列表（只显示前3条）
     adviceList.innerHTML = '';
@@ -509,8 +509,8 @@ function updateResultPage(result, totalScore, preciseTemp) {
         adviceList.appendChild(li);
     });
     
-    // 更新激励文案
-    encouragementContent.textContent = result.encouragement;
+    // 更新激励文案（最多50个字）
+    encouragementContent.textContent = truncateText(result.encouragement, 50);
     
     // 保存测试记录（传入选中的职场人格）
     saveTestRecord(result, totalScore, preciseTemp, selectedPersonality);
