@@ -486,9 +486,10 @@ function updateResultPage(result, totalScore, preciseTemp) {
     personalityName.textContent = selectedPersonality.name;
     personalityDescription.textContent = selectedPersonality.description;
     
-    // 更新建议列表
+    // 更新建议列表（只显示前3条）
     adviceList.innerHTML = '';
-    result.advice.forEach(advice => {
+    const advicesToShow = result.advice.slice(0, 3);
+    advicesToShow.forEach(advice => {
         const li = document.createElement('li');
         li.textContent = advice;
         li.classList.add('animate-fadeInUp');
