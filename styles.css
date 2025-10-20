@@ -779,8 +779,8 @@ html, body {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    margin-bottom: var(--spacing-lg);
-    padding: var(--spacing-sm) 0;
+    margin-bottom: var(--spacing-base); /* 压缩顶部间距 */
+    padding: var(--spacing-xs) 0; /* 压缩内边距 */
 }
 
 .personal-title {
