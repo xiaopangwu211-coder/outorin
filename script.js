@@ -113,6 +113,15 @@ function showQuestion() {
     progressText.style.display = 'inline-block';
     progressText.style.width = 'auto';
     progressText.style.marginLeft = 'auto';
+    // 确保父容器为flex右对齐
+    try {
+        const parent = progressText.parentElement;
+        if (parent) {
+            parent.style.display = 'flex';
+            parent.style.justifyContent = 'flex-end';
+            parent.style.width = '100%';
+        }
+    } catch (_) {}
     currentQuestionNum.textContent = currentQuestionIndex + 1;
     
     // 更新问题标题和分类
@@ -512,6 +521,16 @@ function restartTest() {
 function showPersonal() {
     showPage('personalPage');
     loadPersonalData();
+    // 进入个人页后，强制滚动到顶部，避免首屏需要下滑
+    try {
+        const personalPageEl = document.getElementById('personalPage');
+        if (personalPageEl) personalPageEl.scrollTop = 0;
+        if (document.scrollingElement) {
+            document.scrollingElement.scrollTop = 0;
+        } else {
+            window.scrollTo(0, 0);
+        }
+    } catch (_) {}
 }
 
 function loadPersonalData() {
