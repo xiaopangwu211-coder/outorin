@@ -66,9 +66,12 @@ html, body {
     color: var(--text-primary);
     line-height: 1.6;
     overflow-x: hidden;
+    overflow-y: auto; /* 允许全局纵向滚动 */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
+    touch-action: pan-y; /* 移动端垂直滚动 */
+    overscroll-behavior: contain; /* 防止滚动穿透 */
 }
 
 /* ===== 主容器布局 ===== */
@@ -103,6 +106,8 @@ html, body {
     position: relative;
     visibility: visible;
     pointer-events: auto;
+    overflow-y: auto; /* 页面层开启滚动 */
+    -webkit-overflow-scrolling: touch;
 }
 
 /* ===== 欢迎页面样式 ===== */
@@ -1895,7 +1900,7 @@ html, body {
     }
     
     .result-actions {
-        flex-direction: column;
+        flex-direction: row; /* 移动端保持横向排列 */
     }
     
     .action-btn {

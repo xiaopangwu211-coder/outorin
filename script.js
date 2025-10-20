@@ -9,7 +9,8 @@ const welcomePage = document.getElementById('welcomePage');
 const questionPage = document.getElementById('questionPage');
 const resultPage = document.getElementById('resultPage');
 const rankingPage = document.getElementById('rankingPage');
-const personalPage = document.getElementById('personalPage');
+// 个人页已移除
+// const personalPage = document.getElementById('personalPage');
 const loadingOverlay = document.getElementById('loadingOverlay');
 
 // 问题页面元素
@@ -518,86 +519,11 @@ function restartTest() {
 
 
 // ===== 个人页面功能 =====
-function showPersonal() {
-    showPage('personalPage');
-    loadPersonalData();
-    // 进入个人页后，强制滚动到顶部，避免首屏需要下滑
-    try {
-        const personalPageEl = document.getElementById('personalPage');
-        if (personalPageEl) personalPageEl.scrollTop = 0;
-        if (document.scrollingElement) {
-            document.scrollingElement.scrollTop = 0;
-        } else {
-            window.scrollTo(0, 0);
-        }
-    } catch (_) {}
-}
+// function showPersonal() {}
 
-function loadPersonalData() {
-    const testHistory = document.getElementById('testHistory');
-    const history = getTestHistory();
-    
-    if (history.length === 0) {
-        testHistory.innerHTML = `
-            <div class="empty-state">
-                <div class="empty-state-icon">📊</div>
-                <div class="empty-state-text">暂无测试记录</div>
-                <div class="empty-state-desc">开始你的第一次职场温度测试吧！</div>
-            </div>
-        `;
-        return;
-    }
-    
-    testHistory.innerHTML = history.map((record, index) => {
-        // 根据温度生成不同的鼓励内容
-        let encouragementText = '';
-        if (record.temperature <= 35.0) {
-            encouragementText = '💪 你的职场状态非常健康！继续保持这种积极的心态，相信你会在职场中发光发热！';
-        } else if (record.temperature <= 37.0) {
-            encouragementText = '🌟 你的职场温度适中，说明你能够很好地平衡工作与生活。继续保持，未来可期！';
-        } else if (record.temperature <= 39.0) {
-            encouragementText = '🔥 虽然职场温度有点高，但这说明你对工作有很高的热情！记得适当放松，保持身心健康。';
-        } else {
-            encouragementText = '⚡ 职场温度较高，说明你正在经历一些挑战。记住，每一次困难都是成长的机会，加油！';
-        }
-        
-        return `
-            <div class="history-card">
-                <div class="history-card-header">
-                    <div class="history-date">${new Date(record.timestamp).toLocaleString()}</div>
-                    <div class="history-temperature">${record.temperature}°C</div>
-                </div>
-                <div class="history-content">
-                    <div class="history-personality">${record.personalityName}</div>
-                    <div class="history-advice">${record.personalityDescription}</div>
-                    <div class="history-encouragement">
-                        <div class="history-encouragement-text">${encouragementText}</div>
-                    </div>
-                </div>
-            </div>
-        `;
-    }).join('');
+// function loadPersonalData() {}
 
-    // 内容渲染完成后，确保列表滚动到顶部
-    try {
-        const personalPageEl = document.getElementById('personalPage');
-        if (personalPageEl) personalPageEl.scrollTop = 0;
-        if (document.scrollingElement) {
-            document.scrollingElement.scrollTop = 0;
-        } else {
-            window.scrollTo(0, 0);
-        }
-    } catch (_) {}
-}
-
-function clearHistory() {
-    if (confirm('确定要清空所有测试记录吗？此操作不可恢复。')) {
-        localStorage.removeItem('testHistory');
-        localStorage.removeItem('usedQuestionIds');
-        loadPersonalData();
-        showToast('历史记录已清空');
-    }
-}
+// function clearHistory() {}
 
 // ===== 排行榜相关功能已移除 =====
 
