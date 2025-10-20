@@ -108,6 +108,9 @@ function showQuestion() {
     const progress = ((currentQuestionIndex + 1) / totalQuestions) * 100;
     progressFill.style.width = `${progress}%`;
     progressText.textContent = `${currentQuestionIndex + 1}/${totalQuestions}`;
+    // 强制设置页码样式，确保右对齐
+    progressText.style.textAlign = 'right';
+    progressText.style.width = '100%';
     currentQuestionNum.textContent = currentQuestionIndex + 1;
     
     // 更新问题标题和分类
