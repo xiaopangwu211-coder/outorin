@@ -103,32 +103,22 @@
         <!-- 结果页面 -->
         <div class="page result-page" id="resultPage">
             <div class="result-content">
-                <!-- 结果头部 -->
-                <div class="result-header">
+                <!-- 结果头部 - 苹果风格卡片 -->
+                <div class="result-card">
                     <div class="result-icon" id="resultIcon">
                         <i class="fas fa-trophy"></i>
                     </div>
-                    <div class="result-title-row">
-                        <h2 class="result-title" id="resultTitle">职场满意达人</h2>
-                        <div class="temperature-explanation">
-                            <i class="fas fa-info-circle temperature-info-icon" title="职场温度说明"></i>
-                            <div class="temperature-tooltip">
-                                <div class="tooltip-content">
-                                    <p>温度越高，离职概率越高</p>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="result-title" id="resultTitle">职场满意达人</div>
+                    <div class="result-description" id="resultDescription">
+                        你对当前工作很满意，离职概率很低！
                     </div>
                 </div>
                 
-                <!-- 结果描述 -->
-                <div class="result-description" id="resultDescription">
-                    你对当前工作很满意，离职概率很低！
-                </div>
-                
-                <!-- 人格化描述 -->
-                <div class="personality-section">
-                    <h3 class="personality-title">你的职场人格</h3>
+                <!-- 人格化描述 - 苹果风格卡片 -->
+                <div class="personality-card">
+                    <div class="card-header">
+                        <h3 class="card-title">你的职场人格</h3>
+                    </div>
                     <div class="personality-content" id="personalityContent">
                         <div class="personality-name" id="personalityName">职场健康达人</div>
                         <div class="personality-description" id="personalityDescription">
@@ -137,16 +127,18 @@
                     </div>
                 </div>
                 
-                <!-- 建议列表 -->
-                <div class="advice-section">
-                    <h3 class="advice-title">个性化建议</h3>
+                <!-- 建议列表 - 苹果风格卡片 -->
+                <div class="advice-card">
+                    <div class="card-header">
+                        <h3 class="card-title">个性化建议</h3>
+                    </div>
                     <ul class="advice-list" id="adviceList">
                         <!-- 建议将通过JavaScript动态生成 -->
                     </ul>
                 </div>
                 
-                <!-- 激励文案 -->
-                <div class="encouragement-section">
+                <!-- 激励文案 - 苹果风格卡片 -->
+                <div class="encouragement-card">
                     <div class="encouragement-content" id="encouragementContent">
                         💪 你就像职场中的小太阳，用正能量感染着身边的每一个人！
                     </div>
@@ -158,17 +150,39 @@
                         <i class="fas fa-redo"></i>
                         <span>重新测试</span>
                     </button>
-                    <button class="action-btn ranking-btn" onclick="showRanking()">
-                        <i class="fas fa-trophy"></i>
-                        <span>查看排名</span>
+                    <button class="action-btn history-btn" onclick="showPersonal()">
+                        <i class="fas fa-user-clock"></i>
+                        <span>测试记录</span>
                     </button>
                 </div>
             </div>
         </div>
         
-        <!-- 排行榜页面已移除 -->
-        
-        <!-- 个人页面已移除 -->
+        <!-- 个人页面 - 苹果风格模块化设计 -->
+        <div class="page personal-page" id="personalPage">
+            <div class="personal-container">
+                <!-- 页面头部 -->
+                <div class="personal-header">
+                    <button class="back-btn" onclick="backToHome()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h1 class="personal-title">我的测试记录</h1>
+                </div>
+                
+                <!-- 测试记录列表 -->
+                <div class="history-container" id="testHistory">
+                    <!-- 测试记录将通过JavaScript动态生成 -->
+                </div>
+                
+                <!-- 底部操作区 -->
+                <div class="personal-footer">
+                    <button class="clear-btn" onclick="clearHistory()">
+                        <i class="fas fa-trash-alt"></i>
+                        <span>清空记录</span>
+                    </button>
+                </div>
+            </div>
+        </div>
         
         <!-- 公司员工排行页面已移除 -->
         

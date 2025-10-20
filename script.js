@@ -71,6 +71,9 @@ function startTest() {
     currentQuestionIndex = 0;
     userAnswers = [];
     
+    // 记录测试开始时间
+    localStorage.setItem('testStartTime', Date.now());
+    
     // 获取用户历史测试中使用过的问题ID
     const usedQuestionIds = getUsedQuestionIds();
     
@@ -118,6 +121,20 @@ function showQuestion() {
     // 生成选项按钮
     generateOptions(question.options);
     
+    // 强制刷新所有icon显示
+    setTimeout(() => {
+        const allIcons = document.querySelectorAll('.option-btn .option-icon, .option-btn i, .option-btn [class*="fa-"]');
+        allIcons.forEach(icon => {
+            // 强制设置所有样式
+            icon.style.cssText = 'color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;';
+            
+            // 强制重新渲染
+            icon.style.display = 'none';
+            icon.offsetHeight; // 触发重排
+            icon.style.display = 'inline-block';
+        });
+    }, 50);
+    
     // 更新上一题按钮状态
     updatePrevButton();
     
@@ -137,15 +154,26 @@ function forceIconColorBlack() {
     const allIcons = document.querySelectorAll('.option-btn .option-icon, .option-btn i, .option-btn [class*="fa-"]');
     
     allIcons.forEach(icon => {
-        // 强制设置颜色为黑色
-        icon.style.color = '#000000';
+        // 最强制的方法：直接设置所有可能的样式属性
         icon.style.setProperty('color', '#000000', 'important');
+        icon.style.setProperty('background', 'transparent', 'important');
+        icon.style.setProperty('text-shadow', 'none', 'important');
+        icon.style.setProperty('filter', 'none', 'important');
+        icon.style.setProperty('border', 'none', 'important');
+        icon.style.setProperty('outline', 'none', 'important');
+        icon.style.setProperty('box-shadow', 'none', 'important');
+        icon.style.setProperty('-webkit-text-stroke', 'none', 'important');
+        
+        // 强制设置属性
+        icon.setAttribute('style', 'color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important;');
         
         // 移除可能影响颜色的类
-        icon.classList.remove('text-primary', 'text-secondary', 'text-success', 'text-warning', 'text-danger', 'text-info', 'text-light', 'text-dark', 'text-white', 'text-muted');
+        icon.classList.remove('text-primary', 'text-secondary', 'text-success', 'text-warning', 'text-danger', 'text-info', 'text-light', 'text-dark', 'text-white', 'text-muted', 'text-muted', 'text-gray', 'text-gray-500', 'text-gray-600', 'text-gray-700', 'text-gray-800', 'text-gray-900');
         
         // 添加黑色类
         icon.classList.add('text-black');
+        
+        // 注意：CSS属性不能通过setAttribute设置，只能通过style.setProperty设置
     });
 }
 
@@ -159,10 +187,67 @@ function generateOptions(options) {
         optionBtn.setAttribute('data-score', option.score);
         
         // 创建选项内容（最强制设置icon颜色为黑色）
+        const iconClass = option.icon || 'fa-circle';
+        
+        // 先创建按钮
         optionBtn.innerHTML = `
-            <i class="option-icon fas ${option.icon}" style="color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important;"></i>
             <span class="option-text">${option.text}</span>
         `;
+        
+        // 创建icon元素
+        const iconElement = document.createElement('i');
+        iconElement.className = `option-icon fas ${iconClass}`;
+        iconElement.style.cssText = `
+            color: #000000 !important;
+            background: transparent !important;
+            text-shadow: none !important;
+            filter: none !important;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+            -webkit-text-stroke: none !important;
+            text-stroke: none !important;
+            display: inline-block !important;
+            width: 20px !important;
+            height: 20px !important;
+            text-align: center !important;
+            line-height: 20px !important;
+            font-size: 16px !important;
+            margin-right: 8px !important;
+            vertical-align: middle !important;
+        `;
+        
+        // 将icon插入到文本前面
+        optionBtn.insertBefore(iconElement, optionBtn.firstChild);
+        
+        // 多重保险设置icon样式
+        const icon = optionBtn.querySelector('.option-icon');
+        if (icon) {
+            // 强制设置所有样式属性
+            icon.style.setProperty('color', '#000000', 'important');
+            icon.style.setProperty('background', 'transparent', 'important');
+            icon.style.setProperty('text-shadow', 'none', 'important');
+            icon.style.setProperty('filter', 'none', 'important');
+            icon.style.setProperty('border', 'none', 'important');
+            icon.style.setProperty('outline', 'none', 'important');
+            icon.style.setProperty('box-shadow', 'none', 'important');
+            icon.style.setProperty('-webkit-text-stroke', 'none', 'important');
+            icon.style.setProperty('text-stroke', 'none', 'important');
+            icon.style.setProperty('display', 'inline-block', 'important');
+            icon.style.setProperty('width', '20px', 'important');
+            icon.style.setProperty('height', '20px', 'important');
+            icon.style.setProperty('text-align', 'center', 'important');
+            icon.style.setProperty('line-height', '20px', 'important');
+            icon.style.setProperty('font-size', '16px', 'important');
+            icon.style.setProperty('margin-right', '8px', 'important');
+            icon.style.setProperty('vertical-align', 'middle', 'important');
+            
+            // 强制设置类名
+            icon.className = `option-icon fas ${iconClass}`;
+            
+            // 强制设置属性
+            icon.setAttribute('style', 'color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;');
+        }
         
         // 强制设置icon颜色为黑色（多重保险）
         setTimeout(() => {
@@ -185,6 +270,20 @@ function generateOptions(options) {
                 icon.classList.add('text-black');
             }
         }, 0);
+        
+        // 额外的强制刷新机制
+        setTimeout(() => {
+            const icon = optionBtn.querySelector('.option-icon');
+            if (icon) {
+                // 重新设置所有样式
+                icon.style.cssText = 'color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;';
+                
+                // 强制重新渲染
+                icon.style.display = 'none';
+                icon.offsetHeight; // 触发重排
+                icon.style.display = 'inline-block';
+            }
+        }, 100);
         
         // 添加点击事件
         optionBtn.addEventListener('click', (e) => {
@@ -222,6 +321,20 @@ function generateOptions(options) {
     setTimeout(() => {
         forceIconColorBlack();
     }, 1000);
+    
+    // 额外的强制刷新机制 - 确保所有icon都显示
+    setTimeout(() => {
+        const allIcons = document.querySelectorAll('.option-btn .option-icon, .option-btn i, .option-btn [class*="fa-"]');
+        allIcons.forEach(icon => {
+            // 强制设置所有样式
+            icon.style.cssText = 'color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;';
+            
+            // 强制重新渲染
+            icon.style.display = 'none';
+            icon.offsetHeight; // 触发重排
+            icon.style.display = 'inline-block';
+        });
+    }, 1500);
     
     // 移除MutationObserver，避免性能问题
 }
@@ -397,6 +510,68 @@ function restartTest() {
     }, 400);
 }
 
+
+// ===== 个人页面功能 =====
+function showPersonal() {
+    showPage('personalPage');
+    loadPersonalData();
+}
+
+function loadPersonalData() {
+    const testHistory = document.getElementById('testHistory');
+    const history = getTestHistory();
+    
+    if (history.length === 0) {
+        testHistory.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-state-icon">📊</div>
+                <div class="empty-state-text">暂无测试记录</div>
+                <div class="empty-state-desc">开始你的第一次职场温度测试吧！</div>
+            </div>
+        `;
+        return;
+    }
+    
+    testHistory.innerHTML = history.map((record, index) => {
+        // 根据温度生成不同的鼓励内容
+        let encouragementText = '';
+        if (record.temperature <= 35.0) {
+            encouragementText = '💪 你的职场状态非常健康！继续保持这种积极的心态，相信你会在职场中发光发热！';
+        } else if (record.temperature <= 37.0) {
+            encouragementText = '🌟 你的职场温度适中，说明你能够很好地平衡工作与生活。继续保持，未来可期！';
+        } else if (record.temperature <= 39.0) {
+            encouragementText = '🔥 虽然职场温度有点高，但这说明你对工作有很高的热情！记得适当放松，保持身心健康。';
+        } else {
+            encouragementText = '⚡ 职场温度较高，说明你正在经历一些挑战。记住，每一次困难都是成长的机会，加油！';
+        }
+        
+        return `
+            <div class="history-card">
+                <div class="history-card-header">
+                    <div class="history-date">${new Date(record.timestamp).toLocaleString()}</div>
+                    <div class="history-temperature">${record.temperature}°C</div>
+                </div>
+                <div class="history-content">
+                    <div class="history-personality">${record.personalityName}</div>
+                    <div class="history-advice">${record.personalityDescription}</div>
+                    <div class="history-encouragement">
+                        <div class="history-encouragement-text">${encouragementText}</div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+function clearHistory() {
+    if (confirm('确定要清空所有测试记录吗？此操作不可恢复。')) {
+        localStorage.removeItem('testHistory');
+        localStorage.removeItem('usedQuestionIds');
+        loadPersonalData();
+        showToast('历史记录已清空');
+    }
+}
+
 // ===== 排行榜相关功能已移除 =====
 
 // ===== 搜索公司功能已移除 =====
@@ -524,6 +699,9 @@ function getAllTestRecords() {
 // ===== 保存测试记录 =====
 function saveTestRecord(result, totalScore, preciseTemp, selectedPersonality) {
     const history = getTestHistory();
+    const testStartTime = localStorage.getItem('testStartTime');
+    const duration = testStartTime ? Math.round((Date.now() - testStartTime) / 1000) : null;
+    
     const newRecord = {
         id: Date.now(),
         title: result.title,
@@ -533,9 +711,11 @@ function saveTestRecord(result, totalScore, preciseTemp, selectedPersonality) {
         icon: result.icon,
         date: new Date().toLocaleDateString('zh-CN'),
         timestamp: Date.now(),
-        personality: selectedPersonality.name, // 使用选中的职场人格名称
+        personalityName: selectedPersonality.name, // 使用选中的职场人格名称
         personalityDescription: selectedPersonality.description, // 使用选中的职场人格描述
         advice: result.advice,
+        totalScore: totalScore,
+        duration: duration ? `${Math.floor(duration / 60)}分${duration % 60}秒` : null,
         questions: currentQuestions // 保存本次测试的问题
     };
     
