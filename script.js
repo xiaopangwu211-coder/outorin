@@ -111,6 +111,8 @@ function showQuestion() {
     // 强制设置页码样式，确保右对齐
     progressText.style.textAlign = 'right';
     progressText.style.display = 'inline-block';
+    progressText.style.width = 'auto';
+    progressText.style.marginLeft = 'auto';
     currentQuestionNum.textContent = currentQuestionIndex + 1;
     
     // 更新问题标题和分类
@@ -192,36 +194,11 @@ function generateOptions(options) {
         // 创建选项内容（最强制设置icon颜色为黑色）
         const iconClass = option.icon || 'fa-circle';
         
-        // 先创建按钮
+        // 直接创建包含icon和文本的HTML
         optionBtn.innerHTML = `
+            <i class="option-icon fas ${iconClass}" style="color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;"></i>
             <span class="option-text">${option.text}</span>
         `;
-        
-        // 创建icon元素
-        const iconElement = document.createElement('i');
-        iconElement.className = `option-icon fas ${iconClass}`;
-        iconElement.style.cssText = `
-            color: #000000 !important;
-            background: transparent !important;
-            text-shadow: none !important;
-            filter: none !important;
-            border: none !important;
-            outline: none !important;
-            box-shadow: none !important;
-            -webkit-text-stroke: none !important;
-            text-stroke: none !important;
-            display: inline-block !important;
-            width: 20px !important;
-            height: 20px !important;
-            text-align: center !important;
-            line-height: 20px !important;
-            font-size: 16px !important;
-            margin-right: 8px !important;
-            vertical-align: middle !important;
-        `;
-        
-        // 将icon插入到文本前面
-        optionBtn.insertBefore(iconElement, optionBtn.firstChild);
         
         // 多重保险设置icon样式
         const icon = optionBtn.querySelector('.option-icon');
@@ -244,12 +221,6 @@ function generateOptions(options) {
             icon.style.setProperty('font-size', '16px', 'important');
             icon.style.setProperty('margin-right', '8px', 'important');
             icon.style.setProperty('vertical-align', 'middle', 'important');
-            
-            // 强制设置类名
-            icon.className = `option-icon fas ${iconClass}`;
-            
-            // 强制设置属性
-            icon.setAttribute('style', 'color: #000000 !important; background: transparent !important; text-shadow: none !important; filter: none !important; border: none !important; outline: none !important; box-shadow: none !important; -webkit-text-stroke: none !important; text-stroke: none !important; display: inline-block !important; width: 20px !important; height: 20px !important; text-align: center !important; line-height: 20px !important; font-size: 16px !important; margin-right: 8px !important; vertical-align: middle !important;');
         }
         
         // 强制设置icon颜色为黑色（多重保险）

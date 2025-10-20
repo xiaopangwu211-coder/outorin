@@ -755,6 +755,8 @@ html, body {
 
 /* ===== 个人页面 - 简洁紧凑设计 ===== */
 .personal-page {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
     background: #f8f9fa;
     overflow-y: auto;
@@ -764,9 +766,12 @@ html, body {
 }
 
 .personal-container {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     max-width: 100%;
     margin: 0 auto;
+    min-height: 100%;
 }
 
 .personal-header {
@@ -787,6 +792,7 @@ html, body {
 .history-container {
     width: 100%;
     margin-bottom: var(--spacing-lg);
+    overflow: visible; /* 初始直接显示内容，不用内层滚动 */
 }
 
 .history-container::-webkit-scrollbar {
@@ -1161,16 +1167,16 @@ html, body {
     display: flex;
     justify-content: center;
     gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--radius-lg);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0; /* 去除容器填充 */
+    background: transparent; /* 去除背景填充 */
+    backdrop-filter: none; /* 去除毛玻璃 */
+    -webkit-backdrop-filter: none;
+    border-radius: 0;
+    box-shadow: none; /* 去除阴影 */
+    border: none; /* 去除边框 */
     z-index: 1000;
-    width: calc(100% - 2 * var(--spacing-base));
-    max-width: 400px;
+    width: auto;
+    max-width: none;
 }
 
 .action-btn {
